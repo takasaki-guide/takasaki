@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高崎駅周辺 暇つぶしガイド</title>
+    <link rel="stylesheet" href="nomu.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">TAKASAKI</div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="facility/facility.html">施設</a></li>
+                <li><a href="cafe/cafe.html">カフェ</a></li>
+                <li><a href="food/food.html">飲食店</a></li>
+            </ul>
+        </nav>
+        <!-- ハンバーガーボタン（スマホのみ表示） -->
+        <button class="hamburger" id="hamburger-btn" aria-label="メニューを開く">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <section class="hero" id="top">
+        <div class="hero-text">
+            <h1>高崎で、<br>何して遊ぶ？</h1>
+            <p>高崎駅周辺のおすすめ暇つぶしスポット特集</p>
+        </div>
+        <div class="scroll">
+            <span>SCROLL</span>
+            <div class="arrow"></div>
+        </div>
+    </section>
+
+    <section class="spot reverse" id="facility">
+        <img src="img/cafee.jpg" alt="人気スポット">
+        <div class="spot-text">
+            <h2>レジャー施設</h2>
+            <p>高崎OPAやモントレーなど、<br>駅直結でぶらぶらできるスポットが満載。</p>
+            <a href="facility/facility.html" class="link-button">施設一覧を見る</a>
+        </div>
+    </section>
+
+    <section class="spot" id="food">
+        <img src="img/cafe.jpg" alt="男子おすすめカフェ">
+        <div class="spot-text">
+            <h2>絶景カフェ</h2>
+            <p>高崎パスタや駅弁、居酒屋まで。<br>お腹も心も満たされる飲食店をチェック。</p>
+            <a href="cafe/cafe.html" class="link-button">カフェ店一覧を見る</a>
+        </div>
+    </section>
+
+    <section class="spot reverse" id="cafe">
+        <img src="img/insyoku.jpg" alt="人気の飲食">
+        <div class="spot-text">
+            <h2>どすこいラーメン</h2>
+            <p>待ち合わせや、ちょっとした作業に。<br>こだわりのコーヒーと落ち着く空間をご提案。</p>
+            <a href="food/food.html" class="link-button">飲食店一覧を見る</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Takasaki Leisure Guide</p>
+        <small>© 2026 All Rights Reserved.</small>
+    </footer>
+
+    <a href="#top" class="top-btn">↑</a>
+
+    <script>
+        const btn = document.getElementById('hamburger-btn');
+        const nav = document.getElementById('nav-menu');
+
+        btn.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open');
+            btn.classList.toggle('active', isOpen);
+            btn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+        });
+
+        // メニュー内のリンクをタップしたら閉じる
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('open');
+                btn.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

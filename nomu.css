@@ -1,0 +1,528 @@
+/* =========================
+   1. リセット & ベース設定
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =========================
+   全体
+========================= */
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:sans-serif;
+    background:#f4f4f4;
+    color:#333;
+    overflow-x:hidden;
+    padding-left:168px;
+    padding-right:168px;
+}
+
+/* =========================
+   両サイドの帯
+========================= */
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    top:0;
+    width:168px;
+    height:100vh;
+    z-index:500;
+    pointer-events:none;
+    background:linear-gradient(to bottom,#111,#676767,#111);
+    box-shadow:0 0 15px rgba(255,140,0,0.35);
+}
+
+body::before{
+    left:0;
+    border-right:2px solid rgba(255,255,255,0.1);
+}
+
+body::after{
+    right:0;
+    border-left:2px solid rgba(255,255,255,0.1);
+}
+
+/* =========================
+   ヘッダー
+========================= */
+header{
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:25px 200px;
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+    color:white;
+    font-size:50px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+/* =========================
+   ナビ（PC）
+========================= */
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav li{
+    margin-left:40px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-size:24px;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:orange;
+}
+
+/* =========================
+   ハンバーガーボタン（PC時は非表示）
+========================= */
+.hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+    z-index:1100;
+}
+
+.hamburger span{
+    display:block;
+    width:30px;
+    height:3px;
+    background:white;
+    border-radius:10px;
+    transition:0.35s;
+    transform-origin:center;
+}
+
+/* ✕アニメーション */
+.hamburger.active span:nth-child(1){
+    transform:translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2){
+    opacity:0;
+    transform:scaleX(0);
+}
+.hamburger.active span:nth-child(3){
+    transform:translateY(-9px) rotate(-45deg);
+}
+
+/* =========================
+   Hero
+========================= */
+.hero{
+    width:calc(100% + 336px);
+    margin-left:-168px;
+    margin-right:-168px;
+    height:100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.75)),
+        url("img/main.jpg");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    /* 帯分の余白を内側に確保 */
+    padding-left:168px;
+    padding-right:168px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    top:-50%;left:-50%;
+    width:200%;height:200%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.05),transparent);
+    transform:rotate(15deg);
+    animation:shine 8s linear infinite;
+}
+
+.hero-text{
+    position:relative;
+    z-index:2;
+    padding:80px 100px;
+    border-radius:35px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 20px 50px rgba(0,0,0,0.45);
+    animation:fadeUp 1.2s ease;
+}
+
+.hero h1{
+    font-size:clamp(40px,8vw,100px);
+    color:white;
+    font-weight:900;
+    letter-spacing:10px;
+    margin-bottom:20px;
+    text-shadow:0 5px 25px rgba(0,0,0,0.8);
+    animation:glow 3s infinite alternate;
+}
+
+.hero p{
+    font-size:24px;
+    color:white;
+    letter-spacing:4px;
+    text-shadow:0 3px 10px rgba(0,0,0,0.5);
+}
+
+/* =========================
+   Spot
+========================= */
+.spot{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:80px;
+    padding:120px 40px;
+    border-bottom:1px solid #e6e6e6;
+    transition:0.4s;
+    animation:fadeUp 1s ease;
+}
+
+.spot:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.15);
+}
+
+.reverse{ flex-direction:row-reverse; }
+
+#facility{ background:linear-gradient(to right,#f8f9fa,#ffffff); }
+#food{     background:linear-gradient(to right,#fff5f5,#ffffff); }
+#cafe{     background:linear-gradient(to right,#fdf5e6,#ffffff); }
+
+img{
+    max-width:100%;
+    height:auto;
+    display:block;
+}
+
+.spot img{
+    width:45%;
+    max-width:550px;
+    border-radius:25px;
+    border:3px solid transparent;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    transition:0.5s;
+    transform:perspective(1000px) rotateY(-5deg);
+    flex-shrink:0;
+}
+
+.spot img:hover{
+    transform:perspective(1000px) rotateY(0deg) scale(1.05);
+    filter:brightness(1.1);
+    border:3px solid rgb(130,127,122);
+}
+
+/* =========================
+   テキスト
+========================= */
+.spot-text{
+    flex:1;
+    max-width:500px;
+}
+
+.spot-text h2{
+    position:relative;
+    display:inline-block;
+    font-size:65px;
+    margin-bottom:30px;
+}
+
+.spot-text h2::after{
+    content:"";
+    position:absolute;
+    left:0;bottom:-10px;
+    width:60px;height:4px;
+    background:orange;
+    border-radius:10px;
+}
+
+.spot-text p{
+    font-size:22px;
+    line-height:2;
+    margin-bottom:35px;
+}
+
+.link-button{
+    display:inline-block;
+    background:orange;
+    color:white;
+    text-decoration:none;
+    padding:18px 40px;
+    border-radius:15px;
+    font-size:22px;
+    font-weight:bold;
+    transition:0.3s;
+    box-shadow:0 0 10px rgba(255,165,0,0.5),0 0 20px rgba(255,165,0,0.3);
+}
+
+.link-button:hover{
+    background:darkorange;
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 15px 30px rgba(255,140,0,0.5);
+}
+
+/* =========================
+   スクロール
+========================= */
+.scroll{
+    position:absolute;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:white;
+    letter-spacing:5px;
+    z-index:2;
+    text-align:center;
+    animation:float 2s infinite;
+}
+
+.scroll span{ font-size:16px; margin-bottom:10px; }
+
+.arrow{
+    width:15px;height:15px;
+    border-right:3px solid white;
+    border-bottom:3px solid white;
+    transform:rotate(45deg);
+    margin:10px auto;
+}
+
+/* =========================
+   フッター & Topボタン
+========================= */
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:60px;
+    font-size:18px;
+    position:relative;
+    z-index:600;
+    margin-left:-168px;
+    margin-right:-168px;
+}
+
+.top-btn{
+    position:fixed;
+    bottom:30px;right:30px;
+    width:55px;height:55px;
+    background:#333;
+    color:white;
+    text-decoration:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    font-size:24px;
+    z-index:999;
+    transition:0.3s;
+}
+
+.top-btn:hover{
+    background:orange;
+    transform:translateY(-5px);
+}
+
+/* =========================
+   details
+========================= */
+details{ margin-top:20px; }
+
+summary{
+    list-style:none;
+    background:orange;
+    color:white;
+    width:240px;
+    padding:20px;
+    border-radius:15px;
+    cursor:pointer;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    transition:0.3s;
+    box-shadow:0 0 10px rgba(255,165,0,0.5),0 0 20px rgba(255,165,0,0.3);
+}
+
+summary:hover{
+    background:darkorange;
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:0 0 20px rgba(255,165,0,0.5);
+}
+
+summary::-webkit-details-marker{ display:none; }
+
+.detail-content{
+    margin-top:25px;
+    background:#f1f1f1;
+    padding:30px;
+    border-radius:20px;
+    line-height:2;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   アニメーション
+========================= */
+@keyframes fadeUp{
+    from{ opacity:0; transform:translateY(60px); }
+    to{   opacity:1; transform:translateY(0); }
+}
+
+@keyframes float{
+    0%,100%{ transform:translateX(-50%) translateY(0); }
+    50%{     transform:translateX(-50%) translateY(10px); }
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 10px rgba(255,255,255,0.2); }
+    to{   text-shadow:0 0 25px rgba(255,255,255,0.6); }
+}
+
+@keyframes shine{
+    from{ transform:translateX(-30%) rotate(15deg); }
+    to{   transform:translateX(30%)  rotate(15deg); }
+}
+
+/* =========================
+   レスポンシブ（768px以下）
+========================= */
+@media(max-width:768px){
+
+    /* 帯を非表示・bodyのpadding解除 */
+    body::before,
+    body::after{ display:none; }
+
+    body{
+        padding-left:0;
+        padding-right:0;
+    }
+
+    /* ヘッダー */
+    header{
+        padding:15px 20px;
+    }
+
+    .logo{ font-size:28px; }
+
+    /* PC用ナビを隠す */
+    #nav-menu{
+        display:none;
+        position:fixed;
+        top:0;left:0;
+        width:100%;
+        height:100vh;
+        background:rgba(0,0,0,0.95);
+        z-index:1050;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
+
+    /* .open が付いたら表示 */
+    #nav-menu.open{
+        display:flex;
+    }
+
+    #nav-menu ul{
+        flex-direction:column;
+        align-items:center;
+        gap:40px;
+    }
+
+    #nav-menu li{
+        margin:0;
+    }
+
+    #nav-menu a{
+        font-size:32px;
+        letter-spacing:4px;
+    }
+
+    /* ハンバーガーボタンを表示 */
+    .hamburger{
+        display:flex;
+        position:relative;
+        z-index:1100;
+    }
+
+    /* hero・footerのネガティブmarginをリセット */
+    .hero{
+        margin-left:0;
+        margin-right:0;
+        width:100%;
+        padding-left:0;
+        padding-right:0;
+    }
+
+    footer{
+        margin-left:0;
+        margin-right:0;
+    }
+
+    .hero-text{
+        padding:40px 20px;
+        border-radius:20px;
+    }
+
+    .hero h1{ font-size:42px; letter-spacing:4px; }
+    .hero p{ font-size:18px; }
+
+    .spot{
+        flex-direction:column;
+        padding:60px 20px;
+        gap:30px;
+    }
+
+    .spot img{
+        width:100%;
+        transform:none;
+    }
+
+    .spot-text{ width:100%; }
+    .spot-text h2{ font-size:32px; }
+    .spot-text p{ font-size:18px; }
+
+    .link-button{
+        width:100%;
+        font-size:18px;
+        padding:15px;
+    }
+
+    summary{ width:100%; font-size:18px; }
+}

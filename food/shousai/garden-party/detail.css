@@ -1,0 +1,179 @@
+/* リセット */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 全体 */
+body{
+    font-family: 'Poppins', sans-serif;
+
+    background: #f5f1ea;
+
+    color: #333;
+}
+
+/* メイン画像 */
+.hero{
+    height: 70vh;
+
+    background: url("../images/shop1.jpg") center/cover;
+
+    position: relative;
+}
+
+/* 黒透過 */
+.overlay{
+    width: 100%;
+    height: 100%;
+
+    background: rgba(201,123,99,0.45);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: white;
+}
+
+.overlay h1{
+    font-size: 70px;
+
+    margin-bottom: 20px;
+
+    letter-spacing: 3px;
+}
+
+/* 詳細エリア */
+.detail{
+    padding: 80px 8%;
+}
+
+/* 白カード */
+.content{
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    display: flex;
+
+    gap: 40px;
+
+    align-items: center;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* 画像 */
+.content img{
+    width: 45%;
+
+    border-radius: 20px;
+
+    object-fit: cover;
+}
+
+/* テキスト */
+.text{
+    flex: 1;
+}
+
+.text h2{
+    font-size: 40px;
+
+    margin-bottom: 20px;
+
+    color: #c97b63;
+}
+
+.text h3{
+    margin-top: 30px;
+
+    margin-bottom: 10px;
+
+   color: #c97b63;
+}
+
+.text p{
+    line-height: 1.8;
+
+    color: #666;
+}
+
+/* スマホ対応 */
+@media(max-width: 900px){
+
+    .content{
+        flex-direction: column;
+    }
+
+    .content img{
+        width: 100%;
+    }
+
+    .overlay h1{
+        font-size: 40px;
+    }
+
+    .text h2{
+        font-size: 30px;
+    }
+}
+/* =========================
+   TOPに戻るボタン
+========================= */
+.top-btn{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 24px;
+    z-index: 999;
+    transition: 0.3s;
+}
+
+.top-btn:hover{
+    background: orange;
+    transform: translateY(-5px);
+}
+
+/* =========================
+   HOMEに戻るボタン
+========================= */
+.home-btn{
+    position: fixed;
+    bottom: 95px; /* TOPボタンの上に配置 */
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 24px;
+    z-index: 999;
+    transition: 0.3s;
+}
+
+.home-btn:hover{
+    background: orange;
+    transform: translateY(-5px);
+}
