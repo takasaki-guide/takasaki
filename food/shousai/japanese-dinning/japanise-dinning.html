@@ -3,30 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高崎レジャーランド</title>
+    <title>イタリアン チキン</title>
 
-    <link rel="stylesheet" href="japanise-dinnning.css">
+    <link rel="stylesheet" href="../food-shousai.css">
 </head>
+
 <body>
 
-    <!-- メイン画像 -->
+    <!-- タイトル -->
+    <div class="overlay">
 
-        <div class="overlay">
+        <h1>
+            イタリアン チキン
+        </h1>
 
-            <h1>
-            和食
-            </h1>
-
-        </div>
-
+    </div>
 
     <!-- 詳細 -->
     <section class="detail">
 
         <div class="content">
 
-            <img src="../../images/animal.jpg" alt="">
+            <!-- 左側 -->
+            <div class="left-area">
 
+                <!-- スライダー -->
+                <div class="slider">
+
+                    <div class="slides"></div>
+
+                <!-- 一覧ボタン -->
+                <a href="#" class="gallery-btn">
+                    一覧で見る
+                </a>
+
+                <!-- 一覧表示 -->
+                <div class="gallery"></div>
+
+            </div>
+
+            <!-- テキスト -->
             <div class="text">
 
                 <h2>施設紹介</h2>
@@ -35,8 +51,8 @@
                     季節のもんを、ひとつひとつ丁寧に仕立てておりますかい
                 </p>
                 <p>
-                    どうぞ気ぃ楽に召し上がっとくれやす<
-                /p>
+                    どうぞ気ぃ楽に召し上がっとくれやす
+                </p>
 
                 <h3>営業時間</h3>
 
@@ -61,10 +77,332 @@
 
     </section>
 
-      <!-- TOPに戻るボタン -->
+    <!-- TOPに戻る -->
     <a href="#" class="top-btn">↑</a>
 
-    <!-- HOMEに戻るボタン -->
-    <a href="../../../nomu.html" class="home-btn">🏠</a>
+    <!-- HOMEに戻る -->
+    <a href="../../../index.html" class="home-btn">🏠</a>
+
+    <!-- 拡大表示 -->
+    <div class="lightbox">
+
+        <!-- 閉じる -->
+        <span class="close">×</span>
+
+        <!-- 左右ボタン -->
+        <button class="lightbox-prev">❮</button>
+
+        <img class="lightbox-img" src="" alt="">
+
+        <button class="lightbox-next">❯</button>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // =========================
+        // 画像設定
+        // =========================
+
+        const imageCount = 25;
+        const imageFolder = "img/cafe";
+
+        // =========================
+        // 画像リスト作成
+        // =========================
+
+        const allImages = [];
+
+        for(let i = 1; i <= imageCount; i++){
+            allImages.push(`${imageFolder}${i}.jpg`);
+        }
+
+        // =========================
+        // スライダー・ギャラリー生成
+        // =========================
+
+        const slidesContainer = document.querySelector(".slides");
+        const galleryContainer = document.querySelector(".gallery");
+
+        allImages.forEach(src => {
+
+            // スライダー
+            const slideImg = document.createElement("img");
+
+            slideImg.src = src;
+            slideImg.className = "slide";
+
+            slidesContainer.appendChild(slideImg);
+
+            // ギャラリー
+            const galleryImg = document.createElement("img");
+
+            galleryImg.src = src;
+            galleryImg.className = "gallery-img";
+
+            galleryContainer.appendChild(galleryImg);
+        });
+
+        // 無限ループ用に1枚目を複製
+
+        const clone = document.createElement("img");
+
+        clone.src = allImages[0];
+        clone.className = "slide";
+
+        slidesContainer.appendChild(clone);
+
+        // =========================
+        // スライダー
+        // =========================
+
+        const slides = document.querySelector(".slides");
+        const slide = document.querySelectorAll(".slide");
+
+        const prevBtn = document.querySelector(".prev");
+        const nextBtn = document.querySelector(".next");
+
+        let current = 0;
+
+        const totalSlides = slide.length;
+
+        let autoSlide;
+
+        // =========================
+        // スライド更新
+        // =========================
+
+        function updateSlide() {
+
+            slides.style.transition = "transform 0.5s ease";
+
+            slides.style.transform =
+                `translateX(-${current * 100}%)`;
+        }
+
+        // =========================
+        // 自動スライド開始
+        // =========================
+
+        function startAutoSlide(){
+
+            autoSlide = setInterval(() => {
+
+                nextSlide(false);
+
+            }, 4000);
+        }
+
+        // =========================
+        // 自動スライドリセット
+        // =========================
+
+        function resetAutoSlide(){
+
+            clearInterval(autoSlide);
+
+            startAutoSlide();
+        }
+
+        // =========================
+        // 次へ
+        // =========================
+
+        function nextSlide(reset = true) {
+
+            current++;
+
+            updateSlide();
+
+            if(current === totalSlides - 1){
+
+                setTimeout(() => {
+
+                    slides.style.transition = "none";
+
+                    current = 0;
+
+                    slides.style.transform =
+                        `translateX(0%)`;
+
+                }, 500);
+            }
+
+            if(reset){
+                resetAutoSlide();
+            }
+        }
+
+        // =========================
+        // 前へ
+        // =========================
+
+        function prevSlide() {
+
+            if(current <= 0){
+
+                current = totalSlides - 2;
+
+                slides.style.transition = "none";
+
+                slides.style.transform =
+                    `translateX(-${current * 100}%)`;
+
+                setTimeout(() => {
+
+                    current--;
+
+                    updateSlide();
+
+                }, 10);
+
+            }else{
+
+                current--;
+
+                updateSlide();
+            }
+
+            resetAutoSlide();
+        }
+
+        // ボタン
+
+        nextBtn.addEventListener("click", () => nextSlide());
+
+        prevBtn.addEventListener("click", prevSlide);
+
+        // 開始
+
+        startAutoSlide();
+
+        // =========================
+        // 一覧表示
+        // =========================
+
+        const galleryBtn = document.querySelector(".gallery-btn");
+        const gallery = document.querySelector(".gallery");
+
+        let galleryOpen = false;
+
+        galleryBtn.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            galleryOpen = !galleryOpen;
+
+            if(galleryOpen){
+
+                gallery.style.display = "grid";
+
+                galleryBtn.textContent = "閉じる";
+
+            }else{
+
+                gallery.style.display = "none";
+
+                galleryBtn.textContent = "一覧で見る";
+            }
+        });
+
+        // =========================
+        // 拡大表示
+        // =========================
+
+        const lightbox = document.querySelector(".lightbox");
+        const lightboxImg = document.querySelector(".lightbox-img");
+        const closeBtn = document.querySelector(".close");
+
+        const lightboxPrev = document.querySelector(".lightbox-prev");
+        const lightboxNext = document.querySelector(".lightbox-next");
+
+        let currentLightbox = 0;
+
+        // 表示更新
+
+        function updateLightbox(){
+
+            lightboxImg.src = allImages[currentLightbox];
+        }
+
+        // スライダー画像クリック
+
+        slide.forEach((img, index) => {
+
+            if(index >= allImages.length) return;
+
+            img.addEventListener("click", () => {
+
+                currentLightbox = index;
+
+                updateLightbox();
+
+                lightbox.style.display = "flex";
+            });
+        });
+
+        // 一覧画像クリック
+
+        const galleryImgs =
+            document.querySelectorAll(".gallery-img");
+
+        galleryImgs.forEach((img, index) => {
+
+            img.addEventListener("click", () => {
+
+                currentLightbox = index;
+
+                updateLightbox();
+
+                lightbox.style.display = "flex";
+            });
+        });
+
+        // 次へ
+
+        lightboxNext.addEventListener("click", () => {
+
+            currentLightbox++;
+
+            if(currentLightbox >= allImages.length){
+
+                currentLightbox = 0;
+            }
+
+            updateLightbox();
+        });
+
+        // 前へ
+
+        lightboxPrev.addEventListener("click", () => {
+
+            currentLightbox--;
+
+            if(currentLightbox < 0){
+
+                currentLightbox = allImages.length - 1;
+            }
+
+            updateLightbox();
+        });
+
+        // 閉じる
+
+        closeBtn.addEventListener("click", () => {
+
+            lightbox.style.display = "none";
+        });
+
+        // 背景クリック
+
+        lightbox.addEventListener("click", (e) => {
+
+            if(e.target === lightbox){
+
+                lightbox.style.display = "none";
+            }
+        });
+        </script>
+
 </body>
 </html>
