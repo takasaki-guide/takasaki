@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cafe千年木</title>
+    <title>Le*Lien</title>
 
-    <link rel="stylesheet" href="../cafe-shousai.css">
+    <link rel="stylesheet" href="../food-shousai.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <div class="overlay">
 
         <h1>
-            Cafe千年木
+            Le*Lien
         </h1>
 
     </div>
@@ -30,16 +30,7 @@
                 <!-- スライダー -->
                 <div class="slider">
 
-                    <div class="slides">
-
-                        <img src="img/cafe1.jpg" class="slide" alt="">
-                        <img src="img/cafe2.jpg" class="slide" alt="">
-                        <img src="img/cafe3.jpg" class="slide" alt="">
-
-                        <!-- 一枚目を複製 -->
-                        <img src="img/cafe1.jpg" class="slide" alt="">
-
-                    </div>
+                    <div class="slides"></div>
 
                     <button class="prev">❮</button>
                     <button class="next">❯</button>
@@ -52,13 +43,7 @@
                 </a>
 
                 <!-- 一覧表示 -->
-                <div class="gallery">
-
-                    <img src="img/cafe1.jpg" class="gallery-img" alt="">
-                    <img src="img/cafe2.jpg" class="gallery-img" alt="">
-                    <img src="img/cafe3.jpg" class="gallery-img" alt="">
-
-                </div>
+                <div class="gallery"></div>
 
             </div>
 
@@ -68,28 +53,43 @@
                 <h2>施設紹介</h2>
 
                 <p>
-                    取材内容を書く
+                    高崎駅近くにある「Le*Lien」は、今年で13年目を迎える女性に人気のカフェです。<br>
+                    国産のむぎ豚を使うなど、素材にこだわったメニューを提供しています。<br>
+                    季節限定のパンケーキも人気で、いちごを使用する際は「やよい姫」を栽培する農家から直接仕入れているそうです。<br>
+                    今回いただいたティラミスパンケーキは、甘すぎず苦すぎない絶妙な味わいで、パンケーキの間に挟まれた
+                    クリームが美味しさをさらに引き立てていました。<br>
+                    豚唐丼セットは、厚切りの豚肉にザクザクとした衣が付き、甘だれ・のり・白髪ネギが絶妙に調和した食べ応え抜群の一品です。<br>
+                    お冷にはレモンやハーブの風味が感じられ、爽やかな後味が食事のおいしさをさらに引き立てていました。<br>
+                    また、店内ではハンドメイド作品の販売も行われており、食事だけでなく買い物も楽しめる魅力的なお店です。
                 </p>
 
+                <h3>支払方法</h3>
+                <p>現金のみ</p>
                 <h3>営業時間</h3>
 
                 <p>
-                    金・土曜10時30分~16時00分
+                    11時00分~17時00分　　L.O.16:30
                 </p>
                 <p>
-                    日曜09時00分~16時00分
+                    定休日：月曜日
+                </p>
+                <p>
+                    ※平日の11:45~13:00はランチタイム優先のため、スイーツは提供しておりません
                 </p>
 
                 <h3>住所</h3>
                 
-                <p>〒370-0053</p>
-                <p>群馬県高崎市通町137</p>
+                <p>〒370-0841</p>
+                <p>群馬県高崎市栄町14-11 きむらビル1 1F</p>
 
                 <h3>電話番号</h3>
 
                 <p>
-                    ーーー
+                    090-6949-4669
                 </p>
+
+                <h3>注意</h3>
+                <p>席利用90分制（ドリンクのみは60分制）</p>
 
             </div>
 
@@ -124,8 +124,8 @@
         // 画像設定
         // =========================
 
-        const imageCount = 25;
-        const imageFolder = "img/cafe";
+        const imageCount = 4;
+        const imageFolder = "img/food";
 
         // =========================
         // 画像リスト作成
@@ -137,40 +137,36 @@
             allImages.push(`${imageFolder}${i}.jpg`);
         }
 
-        // =========================
         // スライダー・ギャラリー生成
-        // =========================
 
         const slidesContainer = document.querySelector(".slides");
         const galleryContainer = document.querySelector(".gallery");
 
+        // 最後の画像を先頭へ複製
+        const firstClone = document.createElement("img");
+        firstClone.src = allImages[allImages.length - 1];
+        firstClone.className = "slide";
+        slidesContainer.appendChild(firstClone);
+
+        // 本物画像
         allImages.forEach(src => {
 
-            // スライダー
             const slideImg = document.createElement("img");
-
             slideImg.src = src;
             slideImg.className = "slide";
-
             slidesContainer.appendChild(slideImg);
 
-            // ギャラリー
             const galleryImg = document.createElement("img");
-
             galleryImg.src = src;
             galleryImg.className = "gallery-img";
-
             galleryContainer.appendChild(galleryImg);
         });
 
-        // 無限ループ用に1枚目を複製
-
-        const clone = document.createElement("img");
-
-        clone.src = allImages[0];
-        clone.className = "slide";
-
-        slidesContainer.appendChild(clone);
+        // 最初の画像を最後へ複製
+        const lastClone = document.createElement("img");
+        lastClone.src = allImages[0];
+        lastClone.className = "slide";
+        slidesContainer.appendChild(lastClone);
 
         // =========================
         // スライダー
@@ -182,9 +178,11 @@
         const prevBtn = document.querySelector(".prev");
         const nextBtn = document.querySelector(".next");
 
-        let current = 0;
+        let current = 1;
 
         const totalSlides = slide.length;
+
+        slides.style.transform = `translateX(-100%)`;
 
         let autoSlide;
 
@@ -240,10 +238,10 @@
 
                     slides.style.transition = "none";
 
-                    current = 0;
+                    current = 1;
 
                     slides.style.transform =
-                        `translateX(0%)`;
+                        `translateX(-100%)`;
 
                 }, 500);
             }
@@ -259,28 +257,22 @@
 
         function prevSlide() {
 
-            if(current <= 0){
+            current--;
 
-                current = totalSlides - 2;
+            updateSlide();
 
-                slides.style.transition = "none";
-
-                slides.style.transform =
-                    `translateX(-${current * 100}%)`;
+            if(current === 0){
 
                 setTimeout(() => {
 
-                    current--;
+                    slides.style.transition = "none";
 
-                    updateSlide();
+                    current = totalSlides - 2;
 
-                }, 10);
+                    slides.style.transform =
+                        `translateX(-${current * 100}%)`;
 
-            }else{
-
-                current--;
-
-                updateSlide();
+                }, 500);
             }
 
             resetAutoSlide();
@@ -423,7 +415,6 @@
             }
         });
         </script>
-
 
 </body>
 </html>

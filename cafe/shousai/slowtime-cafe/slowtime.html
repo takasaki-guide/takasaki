@@ -139,40 +139,36 @@
             allImages.push(`${imageFolder}${i}.jpg`);
         }
 
-        // =========================
         // スライダー・ギャラリー生成
-        // =========================
 
         const slidesContainer = document.querySelector(".slides");
         const galleryContainer = document.querySelector(".gallery");
 
+        // 最後の画像を先頭へ複製
+        const firstClone = document.createElement("img");
+        firstClone.src = allImages[allImages.length - 1];
+        firstClone.className = "slide";
+        slidesContainer.appendChild(firstClone);
+
+        // 本物画像
         allImages.forEach(src => {
 
-            // スライダー
             const slideImg = document.createElement("img");
-
             slideImg.src = src;
             slideImg.className = "slide";
-
             slidesContainer.appendChild(slideImg);
 
-            // ギャラリー
             const galleryImg = document.createElement("img");
-
             galleryImg.src = src;
             galleryImg.className = "gallery-img";
-
             galleryContainer.appendChild(galleryImg);
         });
 
-        // 無限ループ用に1枚目を複製
-
-        const clone = document.createElement("img");
-
-        clone.src = allImages[0];
-        clone.className = "slide";
-
-        slidesContainer.appendChild(clone);
+        // 最初の画像を最後へ複製
+        const lastClone = document.createElement("img");
+        lastClone.src = allImages[0];
+        lastClone.className = "slide";
+        slidesContainer.appendChild(lastClone);
 
         // =========================
         // スライダー
@@ -184,9 +180,11 @@
         const prevBtn = document.querySelector(".prev");
         const nextBtn = document.querySelector(".next");
 
-        let current = 0;
+        let current = 1;
 
         const totalSlides = slide.length;
+
+        slides.style.transform = `translateX(-100%)`;
 
         let autoSlide;
 
@@ -242,10 +240,10 @@
 
                     slides.style.transition = "none";
 
-                    current = 0;
+                    current = 1;
 
                     slides.style.transform =
-                        `translateX(0%)`;
+                        `translateX(-100%)`;
 
                 }, 500);
             }
@@ -261,28 +259,22 @@
 
         function prevSlide() {
 
-            if(current <= 0){
+            current--;
 
-                current = totalSlides - 2;
+            updateSlide();
 
-                slides.style.transition = "none";
-
-                slides.style.transform =
-                    `translateX(-${current * 100}%)`;
+            if(current === 0){
 
                 setTimeout(() => {
 
-                    current--;
+                    slides.style.transition = "none";
 
-                    updateSlide();
+                    current = totalSlides - 2;
 
-                }, 10);
+                    slides.style.transform =
+                        `translateX(-${current * 100}%)`;
 
-            }else{
-
-                current--;
-
-                updateSlide();
+                }, 500);
             }
 
             resetAutoSlide();
